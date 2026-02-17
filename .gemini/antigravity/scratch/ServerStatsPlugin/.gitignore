@@ -1,0 +1,9 @@
+cat > .gitignore << 'EOF'
+.gradle/
+build/
+run/
+.loom-cache/
+*.jar
+.idea/
+*.iml
+.vscode/

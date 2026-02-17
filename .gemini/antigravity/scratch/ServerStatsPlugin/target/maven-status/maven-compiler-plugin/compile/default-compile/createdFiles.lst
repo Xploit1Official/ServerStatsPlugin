@@ -1,0 +1,7 @@
+de\icstats\ICStatsPlugin.class
+de\icstats\WebServer.class
+de\icstats\StatsCollector.class
+de\icstats\WebServer$StatsHandler.class
+de\icstats\ConfigManager.class
+de\icstats\WebServer$DashboardHandler.class
+de\icstats\StatsCommand.class

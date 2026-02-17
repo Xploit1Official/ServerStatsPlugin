@@ -1,0 +1,19 @@
+name: ICStats
+version: 1.0.0
+main: de.icstats.ICStatsPlugin
+api-version: '1.21'
+author: frkn
+description: Lightweight server statistics plugin with web interface
+website: https://github.com/frkn/icstats
+
+commands:
+  icstats:
+    description: Main plugin command
+    usage: /icstats [reload|info|status]
+    permission: icstats.admin
+    aliases: [ics, stats]
+
+permissions:
+  icstats.admin:
+    description: Access to all ICStats commands
+    default: op

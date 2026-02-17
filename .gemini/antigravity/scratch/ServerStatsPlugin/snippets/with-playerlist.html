@@ -1,0 +1,68 @@
+<div id="mc-stats-extended"
+    style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 15px; color: white; font-family: Arial, sans-serif; max-width: 350px;">
+    <h3 style="margin: 0 0 20px 0; text-align: center; font-size: 1.5em;">🎮 Server Status</h3>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px;">
+        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 0.8em; opacity: 0.9;">👥 Spieler</div>
+            <div style="font-size: 1.5em; font-weight: bold; margin-top: 5px;" id="ext-players">-</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 0.8em; opacity: 0.9;">⚡ TPS</div>
+            <div style="font-size: 1.5em; font-weight: bold; margin-top: 5px;" id="ext-tps">-</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 0.8em; opacity: 0.9;">💾 RAM</div>
+            <div style="font-size: 1.5em; font-weight: bold; margin-top: 5px;" id="ext-ram">-</div>
+        </div>
+
+        <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px; text-align: center;">
+            <div style="font-size: 0.8em; opacity: 0.9;">⏱️ Uptime</div>
+            <div style="font-size: 1.2em; font-weight: bold; margin-top: 5px;" id="ext-uptime">-</div>
+        </div>
+    </div>
+
+    <div style="background: rgba(255,255,255,0.15); padding: 15px; border-radius: 10px;">
+        <div style="font-size: 0.9em; font-weight: bold; margin-bottom: 10px;">Online Spieler:</div>
+        <div id="ext-player-list" style="display: flex; flex-wrap: wrap; gap: 8px;">
+            <span
+                style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 15px; font-size: 0.85em;">Keine
+                Spieler</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function updateExtendedStats() {
+        try {
+            const response = await fetch('http://DEINE-SERVER-IP:8080/api/stats');
+            const data = await response.json();
+
+            document.getElementById('ext-players').textContent = data.players.online + '/' + data.players.max;
+            document.getElementById('ext-tps').textContent = data.tps.toFixed(2);
+            document.getElementById('ext-ram').textContent = data.memory.used + 'MB';
+            document.getElementById('ext-uptime').textContent = data.uptime.formatted;
+
+            const playerList = document.getElementById('ext-player-list');
+            playerList.innerHTML = '';
+
+            if (data.players.list && data.players.list.length > 0) {
+                data.players.list.forEach(player => {
+                    const tag = document.createElement('span');
+                    tag.style.cssText = 'background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 15px; font-size: 0.85em;';
+                    tag.textContent = player;
+                    playerList.appendChild(tag);
+                });
+            } else {
+                playerList.innerHTML = '<span style="background: rgba(255,255,255,0.2); padding: 5px 12px; border-radius: 15px; font-size: 0.85em;">Keine Spieler online</span>';
+            }
+        } catch (error) {
+            console.error('Stats laden fehlgeschlagen:', error);
+        }
+    }
+
+    updateExtendedStats();
+    setInterval(updateExtendedStats, 2000);
+</script>

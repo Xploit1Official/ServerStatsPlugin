@@ -1,0 +1,22 @@
+webserver:
+  enabled: true
+  port: 8080
+  host: "0.0.0.0"
+  cors:
+    enabled: true
+    allowed-origins: "*"
+
+server:
+  name: "My Minecraft Server"
+  description: "A cool Minecraft server"
+  website: "https://example.com"
+
+update-interval: 1
+
+display:
+  show-online-players: true
+  show-max-players: true
+  show-tps: true
+  show-ram-usage: true
+  show-ram-max: true
+  show-uptime: true
